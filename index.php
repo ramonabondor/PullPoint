@@ -1,5 +1,6 @@
 <?php
 require 'db.php';
+require 'auth.php';
 
 $polls = $pdo->query("SELECT * FROM polls ORDER BY created_at DESC")->fetchAll(PDO::FETCH_ASSOC);
 
@@ -23,7 +24,14 @@ if (isset($_GET['voted']) && $_GET['voted'] === '1') {
     <h1>🗳️ Voting System</h1>
 
     <div class="admin-link">
-        <a href="create_poll.php">+ Create a new poll</a>
+        <?php if (isLoggedIn()): ?>
+            Logged in as <strong><?= htmlspecialchars(currentUsername()) ?></strong>
+            &middot; <a href="create_poll.php">+ Create a new poll</a>
+            &middot; <a href="logout.php">Log out</a>
+        <?php else: ?>
+            <a href="login.php">Log in</a> to create polls
+            &middot; <a href="register.php">Register</a>
+        <?php endif; ?>
     </div>
 
     <?php if ($message): ?>

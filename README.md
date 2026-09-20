@@ -4,7 +4,8 @@ A simple PHP voting/poll application using SQLite for storage — no external da
 
 ## Features
 
-- Create polls with a question and multiple options
+- Register an account and log in / out
+- Only logged-in users can create polls; anyone can vote and view results
 - Vote on any active poll
 - View live results with percentage bars
 - One vote per poll per browser (enforced via cookie)
@@ -23,7 +24,11 @@ A simple PHP voting/poll application using SQLite for storage — no external da
 | `index.php` | Home page — lists all polls and lets you vote |
 | `vote.php` | Handles the vote submission |
 | `results.php` | Shows results with percentage bars for a given poll |
-| `create_poll.php` | Form to create a new poll with custom options |
+| `create_poll.php` | Form to create a new poll with custom options (requires login) |
+| `auth.php` | Session helper functions (`isLoggedIn()`, `requireLogin()`, etc.) |
+| `register.php` | Account registration form |
+| `login.php` | Login form |
+| `logout.php` | Logs the current user out |
 | `style.css` | Styling for all pages |
 | `voting.db` | SQLite database file (created automatically — not included) |
 
@@ -48,4 +53,6 @@ A simple PHP voting/poll application using SQLite for storage — no external da
 
 - The database file `voting.db` is created automatically the first time the app runs, along with one sample poll ("What is your favorite programming language?").
 - To reset all data, simply delete `voting.db` and reload the page — it will be recreated.
-- The one-vote-per-browser limit uses cookies, so it can be bypassed by clearing cookies or using a different browser/device. For stricter control (e.g. one vote per user account), you'd need to add a login system.
+- The one-vote-per-browser limit uses cookies, so it can be bypassed by clearing cookies or using a different browser/device.
+- Passwords are hashed with PHP's `password_hash()` (bcrypt) — never stored in plain text.
+- Anyone can register their own account; there's no admin approval step. If you want to restrict who can create polls, you'd need to add roles (e.g. an `is_admin` column on `users`).

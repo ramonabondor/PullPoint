@@ -21,6 +21,8 @@ h1 {
 .admin-link {
     text-align: right;
     margin-bottom: 20px;
+    font-size: 0.95em;
+    color: #555;
 }
 
 .admin-link a {
